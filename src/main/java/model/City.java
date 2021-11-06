@@ -1,9 +1,9 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,9 +17,8 @@ import java.util.Date;
  * @see filterClasses.ProcessData
  * @see filterClasses.CreateHTML
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@ToString
+@XmlType(propOrder={"name", "firstMeasurementDate", "lastMeasurementDate", "associatedStationList", "meteoMeasurements", "contaminationMeasurements"})
 public class City {
     private String name;
     private Date firstMeasurementDate; // fecha primera medicion registrada
@@ -27,5 +26,54 @@ public class City {
     private ArrayList<String> associatedStationList = new ArrayList<>();
     private ArrayList<Measurement> meteoMeasurements = new ArrayList<>();
     private ArrayList<Measurement> contaminationMeasurements = new ArrayList<>();
+
+    @XmlAttribute
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getFirstMeasurementDate() {
+        return firstMeasurementDate;
+    }
+
+    public void setFirstMeasurementDate(Date firstMeasurementDate) {
+        this.firstMeasurementDate = firstMeasurementDate;
+    }
+
+    public Date getLastMeasurementDate() {
+        return lastMeasurementDate;
+    }
+
+    public void setLastMeasurementDate(Date lastMeasurementDate) {
+        this.lastMeasurementDate = lastMeasurementDate;
+    }
+
+    public ArrayList<String> getAssociatedStationList() {
+        return associatedStationList;
+    }
+
+    public void setAssociatedStationList(ArrayList<String> associatedStationList) {
+        this.associatedStationList = associatedStationList;
+    }
+
+    public ArrayList<Measurement> getMeteoMeasurements() {
+        return meteoMeasurements;
+    }
+
+    public void setMeteoMeasurements(ArrayList<Measurement> meteoMeasurements) {
+        this.meteoMeasurements = meteoMeasurements;
+    }
+
+    public ArrayList<Measurement> getContaminationMeasurements() {
+        return contaminationMeasurements;
+    }
+
+    public void setContaminationMeasurements(ArrayList<Measurement> contaminationMeasurements) {
+        this.contaminationMeasurements = contaminationMeasurements;
+    }
 }
 
