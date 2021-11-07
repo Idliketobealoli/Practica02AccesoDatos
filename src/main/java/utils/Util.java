@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +29,17 @@ import static java.lang.Integer.parseInt;
  * @see filterClasses.ProcessData
  */
 public class Util {
+    /**
+     * Este método te returnea la fecha actual como String en formato dd-MM-yyyy
+     * @author Daniel Rodríguez Muñoz
+     * @return current date
+     */
+    public static String giveMeDateNow() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+    }
+
     /**
      * Este método leerá el archivo contenido en la carpeta resources que le pasemos por parámetro.
      * Es usado para leer tanto "calidad_aire_datos_mes.csv" como "calidad_aire_datos_meteo_mes.csv"

@@ -1,9 +1,10 @@
 package model;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,17 +18,25 @@ import java.util.Date;
  * @see filterClasses.ProcessData
  * @see filterClasses.CreateHTML
  */
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
-@XmlType(propOrder={"name", "firstMeasurementDate", "lastMeasurementDate", "associatedStationList", "meteoMeasurements", "contaminationMeasurements"})
+@XmlType(propOrder={"name", "firstMeasurementDate", "lastMeasurementDate", "associatedStationList",
+        "meteoMeasurements", "contaminationMeasurements"})
 public class City {
+    @XmlAttribute
     private String name;
+    @XmlElement(name = "first_measurement")
     private Date firstMeasurementDate; // fecha primera medicion registrada
+    @XmlElement(name = "last_measurement")
     private Date lastMeasurementDate; // fecha ultima medicion registrada
+    @XmlElementWrapper(name = "associated_stations")
     private ArrayList<String> associatedStationList = new ArrayList<>();
+    @XmlElementWrapper(name = "meteorological_measurements")
     private ArrayList<Measurement> meteoMeasurements = new ArrayList<>();
+    @XmlElementWrapper(name = "contamination_measurements")
     private ArrayList<Measurement> contaminationMeasurements = new ArrayList<>();
 
-    @XmlAttribute
     public String getName() {
         return name;
     }

@@ -3,6 +3,7 @@ package filterClasses;
 import model.City;
 import model.Measurement;
 import org.jfree.chart.ChartUtilities;
+import utils.Util;
 
 import java.awt.*;
 import java.io.File;
@@ -10,8 +11,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -45,9 +44,8 @@ public class CreateHTML {
      * @see Path
      */
     private Path processPath(City city, Path path) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDateTime now = LocalDateTime.now();
-        return Paths.get(path + File.separator + city.getName() + "-" + dtf.format(now) + ".html");
+        String dateNow = Util.giveMeDateNow();
+        return Paths.get(path + File.separator + city.getName() + "-" + dateNow + ".html");
     }
 
     /**
