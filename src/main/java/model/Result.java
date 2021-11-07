@@ -13,6 +13,7 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@XmlRootElement(name = "result")
 @XmlType(propOrder = {"uuid", "creationDate", "city"})
 public class Result {
     @XmlAttribute(name = "id")

@@ -3,7 +3,6 @@ import filterClasses.Jaxb;
 import filterClasses.ProcessData;
 import model.Result;
 import utils.Util;
-
 import javax.xml.bind.JAXBException;
 import java.util.UUID;
 
@@ -19,8 +18,8 @@ public class App {
         ProcessData pd = new ProcessData("Getafe");
         CreateHTML html = new CreateHTML(pd.desiredCity, "C:\\Users\\User\\Documents");
         Result result = new Result(UUID.randomUUID(), Util.giveMeDateNow(), pd.desiredCity);
-        Jaxb jaxb = Jaxb.getInstance();
         try {
+            Jaxb jaxb = Jaxb.getInstance();
             jaxb.saveIntoDB(result);
         } catch (JAXBException e) {
             System.out.println("An error occurred while saving data in the database.");
