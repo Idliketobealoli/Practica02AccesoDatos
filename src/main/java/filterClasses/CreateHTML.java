@@ -45,7 +45,7 @@ public class CreateHTML {
      */
     private Path processPath(City city, Path path) {
         String dateNow = Util.giveMeDateNow();
-        return Paths.get(path + File.separator + city.getName() + "-" + dateNow + ".html");
+        return Paths.get(path + File.separator + city.getNameCity() + "-" + dateNow + ".html");
     }
 
     /**
@@ -104,10 +104,10 @@ public class CreateHTML {
      * @param pathToImages Path
      */
     private void generateResourcesFolder(City city, Path pathToImages) {
-        for (Measurement meas : city.getMeteoMeasurements()) {
+        for (Measurement meas : city.getMeteoMeasurementsCity()) {
             setUpChartsFolder(pathToImages, meas);
         }
-        for (Measurement meas : city.getContaminationMeasurements()) {
+        for (Measurement meas : city.getContaminationMeasurementsCity()) {
             setUpChartsFolder(pathToImages, meas);
         }
     }
@@ -120,9 +120,9 @@ public class CreateHTML {
      * @param meas
      */
     private void setUpChartsFolder(Path pathToImages, Measurement meas) {
-        Path path = Paths.get(pathToImages + File.separator + meas.getMagnitude());
+        Path path = Paths.get(pathToImages + File.separator + meas.getMagnitudeMeasurement());
         File file = path.toFile();
-        String pathImage = path + File.separator + meas.getMagnitude() + ".png";
+        String pathImage = path + File.separator + meas.getMagnitudeMeasurement() + ".png";
         File fileImage = new File(pathImage);
         if (fileImage.exists()){
             fileImage.delete();
@@ -154,23 +154,23 @@ public class CreateHTML {
     private String writeHTML(City city, Path pathToImages) {
         StringBuilder sb = new StringBuilder();
         sb.append(""); // esto está aquí para prevenir que returnee nulos, aunque sea redundante.
-        String firstMeasDate = formateameDate(city.getFirstMeasurementDate());
-        String lastMeasDate = formateameDate(city.getLastMeasurementDate());
+        String firstMeasDate = formateameDate(city.getFirstMeasurementDateCity());
+        String lastMeasDate = formateameDate(city.getLastMeasurementDateCity());
         sb.append("<!doctype html> \n" +
                 "<html lang=\"es\"> \n" +
                 "\t<head> \n" +
                 "\t\t<meta charset=\"utf-8\"/> \n" +
-                "\t\t<title>El tiempo en " + city.getName() + "</title> \n" +
+                "\t\t<title>El tiempo en " + city.getNameCity() + "</title> \n" +
                 "\t</head> \n" +
                 "\t<body> \n" +
-                "\t\t<h1>Estadísticas de <i>" + city.getName() + "</i>:</h1> \n" +
+                "\t\t<h1>Estadísticas de <i>" + city.getNameCity() + "</i>:</h1> \n" +
                 "\t\t<p> \n\t\t\tPrimera medición registrada: <i>" + firstMeasDate + "</i><br/> \n" +
                 "\t\t\tÚltima medición registrada: <i>" + lastMeasDate + "</i><br/> \n" +
                 "\t\t</p> \n" +
                 "\t\t<p> \n" +
                 "\t\t\t<b>Estaciones asociadas:</b><br/> \n" +
                 "\t\t\t<ul> \n");
-        for (String station: city.getAssociatedStationList()) {
+        for (String station: city.getAssociatedStationListCity()) {
             sb.append("\t\t\t\t<li>" + station + "</li> \n");
         }
         sb.append("\t\t\t</ul> \n" +
@@ -178,27 +178,27 @@ public class CreateHTML {
                 "\t\t<p> \n" +
                 "\t\t\t<b>Información meteorológica:</b><br/> \n" +
                 "\t\t\t<ul> \n");
-        for (Measurement measure: city.getMeteoMeasurements()) {
-            if (measure.getMagnitude() != 89) {
-                sb.append("\t\t\t\t<li><i>" + measure.getMagnitudeName() + "</i> \n" +
+        for (Measurement measure: city.getMeteoMeasurementsCity()) {
+            if (measure.getMagnitudeMeasurement() != 89) {
+                sb.append("\t\t\t\t<li><i>" + measure.getMagnitudeNameMeasurement() + "</i> \n" +
                         "\t\t\t\t\t<ul> \n" +
-                        "\t\t\t\t\t\t<li>" + measure.getMagnitudeName() + " media mensual: " +
-                        measure.getAverageValue() + measure.getMeasurementUnitName() + "</li> \n" +
-                        "\t\t\t\t\t\t<li>Máxima registrada: " + measure.getMaxValue() +
-                        measure.getMeasurementUnitName() + " - " + formateameDate(measure.getMomentMaxValue()) + "</li> \n" +
-                        "\t\t\t\t\t\t<li>Mínima registrada: " + measure.getMinValue() +
-                        measure.getMeasurementUnitName() + " - " + formateameDate(measure.getMomentMinValue()) + "</li> \n" +
+                        "\t\t\t\t\t\t<li>" + measure.getMagnitudeNameMeasurement() + " media mensual: " +
+                        measure.getAverageValueMeasurement() + measure.getMeasurementUnitName() + "</li> \n" +
+                        "\t\t\t\t\t\t<li>Máxima registrada: " + measure.getMaxValueMeasurement() +
+                        measure.getMeasurementUnitName() + " - " + formateameDate(measure.getMomentMaxValueMeasurement()) + "</li> \n" +
+                        "\t\t\t\t\t\t<li>Mínima registrada: " + measure.getMinValueMeasurement() +
+                        measure.getMeasurementUnitName() + " - " + formateameDate(measure.getMomentMinValueMeasurement()) + "</li> \n" +
                         "\t\t\t\t\t\t<li>Evolución mensual: <br/> \n" +
-                        "\t\t\t\t\t\t\t<img src=\"" + pathToImages + File.separator + measure.getMagnitude() + File.separator + measure.getMagnitude() + ".png\" name=\"" +
-                        measure.getMagnitudeName() + "\" id=\"" + measure.getMagnitude() + "\"/> \n" +
+                        "\t\t\t\t\t\t\t<img src=\"" + pathToImages + File.separator + measure.getMagnitudeMeasurement() + File.separator + measure.getMagnitudeMeasurement() + ".png\" name=\"" +
+                        measure.getMagnitudeNameMeasurement() + "\" id=\"" + measure.getMagnitudeMeasurement() + "\"/> \n" +
                         "\t\t\t\t\t\t</li> \n" +
                         "\t\t\t\t\t</ul> \n" +
                         "\t\t\t\t</li>");
             } else {
-                sb.append("\t\t\t\t<li><i>" + measure.getMagnitudeName() + "</i> \n" +
+                sb.append("\t\t\t\t<li><i>" + measure.getMagnitudeNameMeasurement() + "</i> \n" +
                         "\t\t\t\t\t<ul> \n" +
-                        "\t\t\t\t\t\t<li>" + measure.getMagnitudeName() + " media mensual: " +
-                        measure.getAverageValue() + measure.getMeasurementUnitName() + "</li> \n" +
+                        "\t\t\t\t\t\t<li>" + measure.getMagnitudeNameMeasurement() + " media mensual: " +
+                        measure.getAverageValueMeasurement() + measure.getMeasurementUnitName() + "</li> \n" +
                         "\t\t\t\t\t\t<li>Lista de días en los que ha llovido: \n" +
                         "\t\t\t\t\t\t\t<ul> \n");
                 if (measure.getDaysOnWhichRained().isEmpty()) {
@@ -213,8 +213,8 @@ public class CreateHTML {
                 sb.append("\t\t\t\t\t\t\t</ul> \n" +
                         "\t\t\t\t\t\t</li>" +
                         "\t\t\t\t\t\t<li>Histograma: <br/> \n" +
-                        "\t\t\t\t\t\t\t<img src=\"" + pathToImages + File.separator + measure.getMagnitude() + File.separator + measure.getMagnitude() + ".png\" name=\"" +
-                        measure.getMagnitudeName() + "\" id=\"" + measure.getMagnitude() + "\"/> \n" +
+                        "\t\t\t\t\t\t\t<img src=\"" + pathToImages + File.separator + measure.getMagnitudeMeasurement() + File.separator + measure.getMagnitudeMeasurement() + ".png\" name=\"" +
+                        measure.getMagnitudeNameMeasurement() + "\" id=\"" + measure.getMagnitudeMeasurement() + "\"/> \n" +
                         "\t\t\t\t\t\t</li> \n" +
                         "\t\t\t\t\t</ul> \n" +
                         "\t\t\t\t</li>");
@@ -225,18 +225,18 @@ public class CreateHTML {
                 "\t\t<p> \n" +
                 "\t\t\t<b>Información sobre contaminación:</b><br/> \n" +
                 "\t\t\t<ul> \n");
-        for (Measurement measure: city.getContaminationMeasurements()) {
-            sb.append("\t\t\t\t<li><i>" + measure.getMagnitudeName() + "</i> \n" +
+        for (Measurement measure: city.getContaminationMeasurementsCity()) {
+            sb.append("\t\t\t\t<li><i>" + measure.getMagnitudeNameMeasurement() + "</i> \n" +
                     "\t\t\t\t\t<ul> \n" +
                     "\t\t\t\t\t\t<li>Valor medio mensual: " +
-                    measure.getAverageValue() + measure.getMeasurementUnitName() + "</li> \n" +
-                    "\t\t\t\t\t\t<li>Máxima registrada: " + measure.getMaxValue() +
-                    measure.getMeasurementUnitName() + " - " + formateameDate(measure.getMomentMaxValue()) + "</li> \n" +
-                    "\t\t\t\t\t\t<li>Mínima registrada: " + measure.getMinValue() +
-                    measure.getMeasurementUnitName() + " - " + formateameDate(measure.getMomentMinValue()) + "</li> \n" +
+                    measure.getAverageValueMeasurement() + measure.getMeasurementUnitName() + "</li> \n" +
+                    "\t\t\t\t\t\t<li>Máxima registrada: " + measure.getMaxValueMeasurement() +
+                    measure.getMeasurementUnitName() + " - " + formateameDate(measure.getMomentMaxValueMeasurement()) + "</li> \n" +
+                    "\t\t\t\t\t\t<li>Mínima registrada: " + measure.getMinValueMeasurement() +
+                    measure.getMeasurementUnitName() + " - " + formateameDate(measure.getMomentMinValueMeasurement()) + "</li> \n" +
                     "\t\t\t\t\t\t<li>Evolución mensual: <br/> \n" +
-                    "\t\t\t\t\t\t\t<img src=\"" + pathToImages + File.separator + measure.getMagnitude() + File.separator + measure.getMagnitude() + ".png\" name=\"" +
-                    measure.getMagnitudeName() + "\" id=\"" + measure.getMagnitude() + "\"/> \n" +
+                    "\t\t\t\t\t\t\t<img src=\"" + pathToImages + File.separator + measure.getMagnitudeMeasurement() + File.separator + measure.getMagnitudeMeasurement() + ".png\" name=\"" +
+                    measure.getMagnitudeNameMeasurement() + "\" id=\"" + measure.getMagnitudeMeasurement() + "\"/> \n" +
                     "\t\t\t\t\t\t</li> \n" +
                     "\t\t\t\t\t</ul> \n" +
                     "\t\t\t\t</li>");

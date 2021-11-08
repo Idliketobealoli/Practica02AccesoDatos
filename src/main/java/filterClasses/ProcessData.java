@@ -163,7 +163,7 @@ public class ProcessData {
         try {
             setUpMapsAndLists();
             filter(city);
-            desiredCity.setName(city);
+            desiredCity.setNameCity(city);
             List<Measurement> measurementList = setUpMeasurementList();
             setUpCity(desiredCity, measurementList);
         } catch (IOException e) {
@@ -181,11 +181,11 @@ public class ProcessData {
      * @see Measurement
      */
     private void setUpCity(City city, List<Measurement> measureList) {
-        city.setMeteoMeasurements(giveMeMeteoMeasurements(measureList));
-        city.setContaminationMeasurements(giveMeContaminationMeasurements(measureList));
-        city.setFirstMeasurementDate(giveMeFirstDate(city));
-        city.setLastMeasurementDate(giveMeLastDate(city));
-        city.setAssociatedStationList(giveMeStations());
+        city.setMeteoMeasurementsCity(giveMeMeteoMeasurements(measureList));
+        city.setContaminationMeasurementsCity(giveMeContaminationMeasurements(measureList));
+        city.setFirstMeasurementDateCity(giveMeFirstDate(city));
+        city.setLastMeasurementDateCity(giveMeLastDate(city));
+        city.setAssociatedStationListCity(giveMeStations());
     }
 
     /**
@@ -204,7 +204,7 @@ public class ProcessData {
             code = index_to_codes.get(counter);
             if (!(code >= 81 && code <= 89)) {
                 int finalCode = code;
-                List<Measurement> m = measureList.stream().filter(x -> x.getMagnitude() == finalCode).collect(Collectors.toList());
+                List<Measurement> m = measureList.stream().filter(x -> x.getMagnitudeMeasurement() == finalCode).collect(Collectors.toList());
                 contaminationMeasurements.addAll(m);
             }
             counter++;
@@ -228,7 +228,7 @@ public class ProcessData {
             code = index_to_codes.get(counter);
             if (code >= 81 && code <= 89) {
                 int finalCode = code;
-                List<Measurement> m = measureList.stream().filter(x -> x.getMagnitude() == finalCode).collect(Collectors.toList());
+                List<Measurement> m = measureList.stream().filter(x -> x.getMagnitudeMeasurement() == finalCode).collect(Collectors.toList());
                 meteoMeasurements.addAll(m);
             }
             counter++;
@@ -256,10 +256,10 @@ public class ProcessData {
      */
     private Date giveMeFirstDate(City city) {
         List<Date> dateList = new ArrayList<>();
-        for (Measurement measure: city.getMeteoMeasurements()) {
+        for (Measurement measure: city.getMeteoMeasurementsCity()) {
             dateList.add(measure.getData().stream().min(Comparator.comparing(Calidad_aire_datos::getFecha_medicion)).get().getFecha_medicion());
         }
-        for (Measurement measure: city.getContaminationMeasurements()) {
+        for (Measurement measure: city.getContaminationMeasurementsCity()) {
             dateList.add(measure.getData().stream().min(Comparator.comparing(Calidad_aire_datos::getFecha_medicion)).get().getFecha_medicion());
         }
         Optional<Date> result = dateList.stream().min(Comparator.comparing(x -> x));
@@ -275,10 +275,10 @@ public class ProcessData {
      */
     private Date giveMeLastDate(City city) {
         List<Date> dateList = new ArrayList<>();
-        for (Measurement measure: city.getMeteoMeasurements()) {
+        for (Measurement measure: city.getMeteoMeasurementsCity()) {
             dateList.add(measure.getData().stream().max(Comparator.comparing(Calidad_aire_datos::getFecha_medicion)).get().getFecha_medicion());
         }
-        for (Measurement measure: city.getContaminationMeasurements()) {
+        for (Measurement measure: city.getContaminationMeasurementsCity()) {
             dateList.add(measure.getData().stream().max(Comparator.comparing(Calidad_aire_datos::getFecha_medicion)).get().getFecha_medicion());
         }
         Optional<Date> result = dateList.stream().max(Comparator.comparing(x -> x));
@@ -315,30 +315,30 @@ public class ProcessData {
                     (code == 22 || code == 12)) {ignoreEverything = true;}
             if (!ignoreEverything) {
                 Measurement meas = new Measurement();
-                meas.setMagnitude(code);
-                meas.setMagnitudeName(giveMeMagnitudeName(code));
+                meas.setMagnitudeMeasurement(code);
+                meas.setMagnitudeNameMeasurement(giveMeMagnitudeName(code));
                 meas.setMeasurementUnitName(giveMeMeasurementUnitName(code));
                 if (!(code >= 81 && code <= 89)){
                     for(Calidad_aire_datos cad: cadm){
-                        if(cad.getMagnitud() == meas.getMagnitude()){
+                        if(cad.getMagnitud() == meas.getMagnitudeMeasurement()){
                             meas.getData().add(cad);
                         }
                     }
                 }else {
                     for(Calidad_aire_datos cad: cadmm){
-                        if(cad.getMagnitud() == meas.getMagnitude()){
+                        if(cad.getMagnitud() == meas.getMagnitudeMeasurement()){
 
                             meas.getData().add(cad);
                         }
                     }
                 }
                 if (!meas.getData().isEmpty()) {
-                    meas.setAverageValue(giveMeAverageValue(meas.getData()));
+                    meas.setAverageValueMeasurement(giveMeAverageValue(meas.getData()));
                     if(!(code == 89)){
-                        meas.setMomentMinValue(giveMeMomentMinValue(meas.getData()));
-                        meas.setMinValue(giveMeMinValue(meas.getData()));
-                        meas.setMomentMaxValue(giveMeMomentMaxValue(meas.getData()));
-                        meas.setMaxValue(giveMeMaxValue(meas.getData()));
+                        meas.setMomentMinValueMeasurement(giveMeMomentMinValue(meas.getData()));
+                        meas.setMinValueMeasurement(giveMeMinValue(meas.getData()));
+                        meas.setMomentMaxValueMeasurement(giveMeMomentMaxValue(meas.getData()));
+                        meas.setMaxValueMeasurement(giveMeMaxValue(meas.getData()));
                     } else {
                         meas.setDaysOnWhichRained(giveMeDaysOnWhichRained(meas.getData()));
                         meas.setRainMeasurements(giveMeRainMeasurements(meas.getData()));

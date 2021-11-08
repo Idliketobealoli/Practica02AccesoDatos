@@ -1,50 +1,50 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
+import utils.Util;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import java.util.UUID;
 
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @XmlRootElement(name = "result")
-@XmlType(propOrder = {"uuid", "creationDate", "city"})
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Result {
     @XmlAttribute(name = "id")
-    private UUID uuid;
-    @XmlElement(name = "creation_date")
-    private String creationDate;
-    @XmlElement(name = "city")
-    private City city;
+    private UUID uuidResult;
+    private String creationDateResult;
+    private City cityResult;
 
-    public UUID getUuid() {
-        return uuid;
+    public Result(){}
+
+    public Result(City city){
+        this.cityResult = city;
+        this.creationDateResult = Util.giveMeDateNow();
+        this.uuidResult = UUID.randomUUID();
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public UUID getUuidResult() {
+        return uuidResult;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public void setUuidResult(UUID uuidResult) {
+        this.uuidResult = uuidResult;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public String getCreationDateResult() {
+        return creationDateResult;
     }
 
-    public City getCity() {
-        return city;
+    public void setCreationDateResult(String creationDateResult) {
+        this.creationDateResult = creationDateResult;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public City getCityResult() {
+        return cityResult;
+    }
+
+    public void setCityResult(City city) {
+        this.cityResult = city;
     }
 
 }

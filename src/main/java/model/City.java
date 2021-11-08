@@ -1,7 +1,5 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.xml.bind.annotation.*;
@@ -18,71 +16,69 @@ import java.util.Date;
  * @see filterClasses.ProcessData
  * @see filterClasses.CreateHTML
  */
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
-@XmlType(propOrder={"name", "firstMeasurementDate", "lastMeasurementDate", "associatedStationList",
-        "meteoMeasurements", "contaminationMeasurements"})
+@XmlRootElement(name = "city")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class City {
-    @XmlAttribute
-    private String name;
-    @XmlElement(name = "first_measurement")
-    private Date firstMeasurementDate; // fecha primera medicion registrada
-    @XmlElement(name = "last_measurement")
-    private Date lastMeasurementDate; // fecha ultima medicion registrada
+    @XmlAttribute(name = "name_city")
+    private String nameCity;
+    private Date firstMeasurementDateCity; // fecha primera medicion registrada
+    private Date lastMeasurementDateCity; // fecha ultima medicion registrada
     @XmlElementWrapper(name = "associated_stations")
-    private ArrayList<String> associatedStationList = new ArrayList<>();
-    @XmlElementWrapper(name = "meteorological_measurements")
-    private ArrayList<Measurement> meteoMeasurements = new ArrayList<>();
+    private ArrayList<String> associatedStationListCity = new ArrayList<>();
+    @XmlElementWrapper(name = "meteo_measurements")
+    private ArrayList<Measurement> meteoMeasurementsCity = new ArrayList<>();
     @XmlElementWrapper(name = "contamination_measurements")
-    private ArrayList<Measurement> contaminationMeasurements = new ArrayList<>();
+    private ArrayList<Measurement> contaminationMeasurementsCity = new ArrayList<>();
 
-    public String getName() {
-        return name;
+    public City(){}
+
+    public String getNameCity() {
+        return nameCity;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameCity(String nameCity) {
+        this.nameCity = nameCity;
     }
 
-    public Date getFirstMeasurementDate() {
-        return firstMeasurementDate;
+    public Date getFirstMeasurementDateCity() {
+        return firstMeasurementDateCity;
     }
 
-    public void setFirstMeasurementDate(Date firstMeasurementDate) {
-        this.firstMeasurementDate = firstMeasurementDate;
+    public void setFirstMeasurementDateCity(Date firstMeasurementDateCity) {
+        this.firstMeasurementDateCity = firstMeasurementDateCity;
     }
 
-    public Date getLastMeasurementDate() {
-        return lastMeasurementDate;
+    public Date getLastMeasurementDateCity() {
+        return lastMeasurementDateCity;
     }
 
-    public void setLastMeasurementDate(Date lastMeasurementDate) {
-        this.lastMeasurementDate = lastMeasurementDate;
+    public void setLastMeasurementDateCity(Date lastMeasurementDateCity) {
+        this.lastMeasurementDateCity = lastMeasurementDateCity;
     }
 
-    public ArrayList<String> getAssociatedStationList() {
-        return associatedStationList;
+    public ArrayList<String> getAssociatedStationListCity() {
+        return associatedStationListCity;
     }
 
-    public void setAssociatedStationList(ArrayList<String> associatedStationList) {
-        this.associatedStationList = associatedStationList;
+    public void setAssociatedStationListCity(ArrayList<String> associatedStationListCity) {
+        this.associatedStationListCity = associatedStationListCity;
     }
 
-    public ArrayList<Measurement> getMeteoMeasurements() {
-        return meteoMeasurements;
+    public ArrayList<Measurement> getMeteoMeasurementsCity() {
+        return meteoMeasurementsCity;
     }
 
-    public void setMeteoMeasurements(ArrayList<Measurement> meteoMeasurements) {
-        this.meteoMeasurements = meteoMeasurements;
+    public void setMeteoMeasurementsCity(ArrayList<Measurement> meteoMeasurementsCity) {
+        this.meteoMeasurementsCity = meteoMeasurementsCity;
     }
 
-    public ArrayList<Measurement> getContaminationMeasurements() {
-        return contaminationMeasurements;
+    public ArrayList<Measurement> getContaminationMeasurementsCity() {
+        return contaminationMeasurementsCity;
     }
 
-    public void setContaminationMeasurements(ArrayList<Measurement> contaminationMeasurements) {
-        this.contaminationMeasurements = contaminationMeasurements;
+    public void setContaminationMeasurementsCity(ArrayList<Measurement> contaminationMeasurementsCity) {
+        this.contaminationMeasurementsCity = contaminationMeasurementsCity;
     }
 }
 
