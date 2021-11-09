@@ -14,6 +14,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * Esta clase genera el informe markdown y el informe por el terminal
+ * @author Daniel Rodriguez Muñoz
+ */
 public class MarkDownGenerator {
     String cityName;
     String path;
@@ -26,6 +30,12 @@ public class MarkDownGenerator {
         generateMarkdown(path);
     }
 
+    /**
+     * A partir de un path, genera un documento md con el informe completo de la ciudad
+     * que hayamos creado en esta ejecución del programa.
+     * @author Daniel Rodríguez Muñoz
+     * @param path
+     */
     private void generateMarkdown(String path){
         Path pathAsPath = Path.of(path);
         File markdown = pathAsPath.toFile();
@@ -39,6 +49,15 @@ public class MarkDownGenerator {
         }
     }
 
+    /**
+     * Este método genera el markdown.
+     * @param cityName
+     * @return markdown document's text
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     * @throws XPathExpressionException
+     */
     private String writeMarkdown(String cityName) throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
         StringBuilder sb = new StringBuilder();
         sb.append("");

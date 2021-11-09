@@ -6,6 +6,12 @@ import utils.Util;
 import javax.xml.bind.annotation.*;
 import java.util.UUID;
 
+/**
+ * Esta clase pojo sirve para almacenar los datos de los informes generados,
+ * almacenando un objeto city, su fecha de creación y un UUID.
+ * @author Daniel Rodríguez Muñoz
+ * @see City
+ */
 @ToString
 @XmlRootElement(name = "result")
 @XmlAccessorType(XmlAccessType.FIELD)

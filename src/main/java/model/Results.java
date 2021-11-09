@@ -5,6 +5,11 @@ import lombok.ToString;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 
+/**
+ * Esta clase pojo sirve unicamente para almacenar objetos result
+ * @author Daniel Rodríguez Muñoz
+ * @see Result
+ */
 @ToString
 @XmlRootElement(name = "results")
 @XmlAccessorType(XmlAccessType.FIELD)
