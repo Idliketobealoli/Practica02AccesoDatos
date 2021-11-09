@@ -37,6 +37,11 @@ public class MarkDownGenerator {
      * @param path
      */
     private void generateMarkdown(String path){
+        String dataDirectoryURI = System.getProperty("user.dir") + File.separator + "data";
+        File dataDirectory = new File(dataDirectoryURI);
+        if (!dataDirectory.exists()) {
+            dataDirectory.mkdirs();
+        }
         Path pathAsPath = Path.of(path);
         File markdown = pathAsPath.toFile();
         if (!markdown.exists()) {

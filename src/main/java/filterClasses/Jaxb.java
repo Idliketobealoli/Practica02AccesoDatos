@@ -45,6 +45,11 @@ public class Jaxb {
      * @throws JAXBException
      */
     public void saveIntoDB (Result result) throws JAXBException {
+        String dbDirectoryURI = System.getProperty("user.dir") + File.separator + "db";
+        File dbDirectory = new File(dbDirectoryURI);
+        if (!dbDirectory.exists()) {
+            dbDirectory.mkdirs();
+        }
         File file = new File(PATH_TO_MEDICIONES_XML);
         if (!file.exists()) {
             jaxb.createCosas(result);
