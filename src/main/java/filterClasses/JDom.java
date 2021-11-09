@@ -15,9 +15,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Esta clase se encargará de coger las diferentes listas de objetos CalidadX y transformarlas en xmls, así como de
+ * leer dichos XML para pasarlos de nuevo a listas CalidadX.
+ * @author Jaime Salcedo Vallejo
+ */
 public class JDom {
 
-
+    /**
+     * Este método coge una lista de objetos Calidad_aire_datos y genera un xml en la carpeta xml con el nombre que le
+     * pasemos por parámetro.xml
+     * @author Jaime Salcedo Vallejo
+     * @param list
+     * @param name
+     * @return uri al xml creado
+     * @throws IOException
+     */
     public String createXMLcad(List<Calidad_aire_datos> list, String name) throws IOException {
         String uri = System.getProperty("user.dir") + File.separator + "xml" + File.separator + name + ".xml";
         String xmlDirectoryURI = System.getProperty("user.dir") + File.separator + "xml";
@@ -36,6 +49,13 @@ public class JDom {
         return uri;
     }
 
+    /**
+     * Este método crea los diferentes elementos que contendrá el elemento Calidad_aire_datos, y lo devuelve como un
+     * elemento.
+     * @author Jaime Salcedo Vallejo
+     * @param x
+     * @return elementos hijos de Calidad_aire_datos
+     */
     private Element createElementsCAD(Calidad_aire_datos x) {
         Element cad = new Element("calidad_aire_datos");
         cad.setAttribute("magnitud", String.valueOf(x.getMagnitud()));
@@ -67,18 +87,36 @@ public class JDom {
         return cad;
     }
 
+    /**
+     * Crea un elemento hora y le asigna el valor entero y.
+     * @author Jaime Salcedo Vallejo
+     * @param y
+     * @return elemento hora.
+     */
     private Element createElementsHour(Integer y) {
         Element hour = new Element("hora");
         hour.addContent(String.valueOf(y));
         return hour;
     }
 
+    /**
+     * lo mismo que el método createElementsHour, pero con doubles y genera elementos h.
+     * @author Jaime Salcedo Vallejo
+     * @param y
+     * @return elemento h
+     */
     private Element createElementsH(Double y) {
         Element h = new Element("h");
         h.addContent(String.valueOf(y));
         return h;
     }
 
+    /**
+     * lo mismo que el método createElementsHour, pero con characters y genera elementos v.
+     * @author Jaime Salcedo Vallejo
+     * @param y
+     * @return elemento v
+     */
     private Element createElementsV(Character y) {
         Element v = new Element("v");
         v.addContent(String.valueOf(y));
@@ -86,6 +124,14 @@ public class JDom {
     }
 
 
+    /**
+     * Igual que el método createXMLcad, pero para listas de Calidad_aire_estaciones.
+     * @author Jaime Salcedo Vallejo
+     * @param list
+     * @param name
+     * @return uri al xml creado
+     * @throws IOException
+     */
     public String createXMLcae(List<Calidad_aire_estaciones> list, String name) throws IOException {
         String uri = System.getProperty("user.dir") + File.separator +"xml" + File.separator + name + ".xml";
         Document doc = new Document();
@@ -99,6 +145,12 @@ public class JDom {
         return uri;
     }
 
+    /**
+     * Igual que createElementsCAD, pero para objetos Calidad_aire_estaciones.
+     * @author Jaime Salcedo Vallejo
+     * @param x
+     * @return elementos hijos de Calidad_aire_estaciones
+     */
     private Element createElementsCAE(Calidad_aire_estaciones x) {
         Element cae = new Element("calidad_aire_estaciones");
         cae.setAttribute("codigo_estacion", String.valueOf(x.getEstacion_codigo()));
@@ -178,6 +230,14 @@ public class JDom {
         return cae;
     }
 
+    /**
+     * Igual que el método createXMLcad, pero para listas de Calidad_aire_zonas.
+     * @author Jaime Salcedo Vallejo
+     * @param list
+     * @param name
+     * @return uri al xml creado
+     * @throws IOException
+     */
     public String createXMLcaz(List<Calidad_aire_zonas> list, String name) throws IOException {
         String uri = System.getProperty("user.dir") + File.separator +"xml" + File.separator + name + ".xml";
         Document doc = new Document();
@@ -191,6 +251,12 @@ public class JDom {
         return uri;
     }
 
+    /**
+     * Igual que createElementsCAD, pero para objetos Calidad_aire_zonas.
+     * @author Jaime Salcedo Vallejo
+     * @param x
+     * @return elementos hijos de Calidad_aire_zonas
+     */
     private Element createElementsCAZ(Calidad_aire_zonas x) {
         Element caz = new Element("calidad_aire_zonas");
         caz.setAttribute("codigo", String.valueOf(x.getZona_calidad_aire_codigo()));
@@ -204,6 +270,14 @@ public class JDom {
         return caz;
     }
 
+    /**
+     * Este método lee el xml indicado por la uri y devuelve una lista de objetos Calidad_aire_datos a partir de él.
+     * @author Jaime Salcedo Vallejo
+     * @param uri
+     * @return lista de Calidad_aire_datos
+     * @throws IOException
+     * @throws JDOMException
+     */
     public List<Calidad_aire_datos> readCadXML(String uri) throws IOException, JDOMException {
         List<Calidad_aire_datos> cad = new ArrayList<>();
         Document doc = null;
@@ -213,6 +287,12 @@ public class JDom {
         return cad;
     }
 
+    /**
+     * Convierte un elemento x pasado por parámetro en un objeto Calidad_aire_datos
+     * @author Jaime Salcedo Vallejo
+     * @param x
+     * @return Calidad_aire_datos
+     */
     private Calidad_aire_datos elementsToCAD(Element x) {
         Calidad_aire_datos cad = new Calidad_aire_datos();
         cad.setMagnitud(Integer.parseInt(x.getAttributeValue("magnitud")));
@@ -224,6 +304,14 @@ public class JDom {
         return cad;
     }
 
+    /**
+     * Igual que readCadXML, pero para el xml de Cae y devolviendo una lista de objetos Cae.
+     * @author Jaime Salcedo Vallejo
+     * @param uri
+     * @return lista de cae
+     * @throws IOException
+     * @throws JDOMException
+     */
     public List<Calidad_aire_estaciones> readCaeXML(String uri) throws IOException, JDOMException {
         List<Calidad_aire_estaciones> cae = new ArrayList<>();
         Document doc = null;
@@ -233,6 +321,12 @@ public class JDom {
         return cae;
     }
 
+    /**
+     * Igual que elementsToCAD, pero para CAE.
+     * @author Jaime Salcedo Vallejo
+     * @param x
+     * @return cae
+     */
     private Calidad_aire_estaciones elementsToCAE(Element x) {
         Calidad_aire_estaciones cae = new Calidad_aire_estaciones();
         cae.setEstacion_codigo(Integer.parseInt(x.getAttributeValue("codigo_estacion")));
@@ -265,6 +359,14 @@ public class JDom {
 
     }
 
+    /**
+     * Igual que readCadXML, pero para CAZ.
+     * @author Jaime Salcedo Vallejo
+     * @param uri
+     * @return lista de CAZ
+     * @throws IOException
+     * @throws JDOMException
+     */
     public List<Calidad_aire_zonas> readCazXML(String uri) throws IOException, JDOMException {
         List<Calidad_aire_zonas> caz = new ArrayList<>();
         Document doc = null;
@@ -274,6 +376,12 @@ public class JDom {
         return caz;
     }
 
+    /**
+     * Igual que elementsToCAD, pero para CAZ.
+     * @author Jaime Salcedo Vallejo
+     * @param x
+     * @return CAZ
+     */
     private Calidad_aire_zonas elementsToCAZ(Element x) {
         Calidad_aire_zonas caz = new Calidad_aire_zonas();
         caz.setZona_calidad_aire_codigo(Integer.parseInt(x.getAttributeValue("codigo")));
@@ -283,6 +391,14 @@ public class JDom {
         return caz;
     }
 
+    /**
+     * Este método crea un documento y mediante un SAXBuilder y una uri lo deja preparado para ser operado con JDom.
+     * @author Jaime Salcedo Vallejo
+     * @param uri
+     * @return document
+     * @throws IOException
+     * @throws JDOMException
+     */
     private Document getSaxParsedDocument(String uri) throws IOException, JDOMException {
         Document document = null;
         SAXBuilder saxBuilder = new SAXBuilder();
