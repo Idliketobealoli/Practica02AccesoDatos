@@ -42,4 +42,5 @@ cuya ciudad asociada sea la especificada.
 https://github.com/Idliketobealoli/Practica02AccesoDatos
 https://github.com/jaimesalcedo1/Practica02AccesoDatos
 
-#LINK A VIDEO YT:
+#LINK A VIDEO GOOGLE DRIVE (no dejaba subirlo a yt):
+https://drive.google.com/file/d/1ZPpPdsdJ0afpaB-VaehLTK0lMyHxD11g/view?usp=sharing
