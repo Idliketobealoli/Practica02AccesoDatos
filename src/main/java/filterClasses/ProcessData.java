@@ -1,6 +1,7 @@
 package filterClasses;
 
 import model.*;
+import org.jdom2.JDOMException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -166,7 +167,7 @@ public class ProcessData {
             desiredCity.setNameCity(city);
             List<Measurement> measurementList = setUpMeasurementList();
             setUpCity(desiredCity, measurementList);
-        } catch (IOException e) {
+        } catch (IOException | JDOMException e) {
             e.printStackTrace();
         }
     }
@@ -430,10 +431,10 @@ public class ProcessData {
         int count = 0;
         for(Calidad_aire_datos cad : data){
             for(int i = 0;i < cad.getListV().size(); i++){
-               if(!(cad.getListV().get(i).equals('N'))){
-                   result = result + cad.getListH().get(i);
-                   count++;
-               }
+                if(!(cad.getListV().get(i).equals('N'))){
+                    result = result + cad.getListH().get(i);
+                    count++;
+                }
             }
         }
         return (result/count);
@@ -640,7 +641,7 @@ public class ProcessData {
      * @see Calidad_aire_zonas
      * @see Calidad_aire_estaciones
      */
-    private void setUpMapsAndLists() throws IOException {
+    private void setUpMapsAndLists() throws IOException, JDOMException {
         index_to_codes = setValuesIndexToCodes();
         codeMagnitude = setValuesCodeMagnitude();
         codeMeasurementUnit = setValuesCodeMeasureUnit();
@@ -648,6 +649,15 @@ public class ProcessData {
         cadmm = Util.getCalidad_aire_datos("calidad_aire_datos_meteo_mes.csv");
         cae = Util.getCalidad_aire_estaciones();
         caz = Util.getCalidad_aire_zonas();
+        JDom jdom = new JDom();
+        String uri1 = jdom.createXMLcad(cadm, "cadm");
+        String uri2 = jdom.createXMLcad(cadmm, "cadmm");
+        String uri3 = jdom.createXMLcae(cae, "cae");
+        String uri4 = jdom.createXMLcaz(caz, "caz");
+        List<Calidad_aire_datos> cadm2 = jdom.readCadXML(uri1);
+        List<Calidad_aire_datos> cadmm2 = jdom.readCadXML(uri2);
+        List<Calidad_aire_estaciones> cae2 = jdom.readCaeXML(uri3);
+        List<Calidad_aire_zonas> caz2 = jdom.readCazXML(uri4);
         codeCity = setValuesCodeCity();
     }
 

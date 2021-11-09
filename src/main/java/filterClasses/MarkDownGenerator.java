@@ -46,6 +46,14 @@ public class MarkDownGenerator {
             } catch (IOException | ParserConfigurationException | SAXException | XPathExpressionException ex) {
                 ex.printStackTrace();
             }
+        } else {
+            boolean result_of_deleting = markdown.delete();
+            if (!result_of_deleting) {
+                System.out.println("Unable to delete "+ markdown.getName());
+                System.exit(89_999);
+            } else {
+                generateMarkdown(path);
+            }
         }
     }
 
